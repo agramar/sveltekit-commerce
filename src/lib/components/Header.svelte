@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores';
-  import Icons from '$components/Icons.svelte';
-  import { cartQuantity } from '../store';
-  import SearchBar from '$components/SearchBar.svelte';
+  import Icons from '$lib/components/Icons.svelte';
+  import { cartQuantity } from '../../store';
+  import SearchBar from '$lib/components/SearchBar.svelte';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
@@ -14,8 +14,9 @@
   let tabs = [
     { name: 'All', path: '/search' },
     { name: 'Featured', path: '/search/featured' },
-    { name: 'Apparel', path: '/search/clothes' }
+    { name: 'Apparel', path: '/search/clothes' },
   ];
+
   function openCart() {
     showMenu = false;
     dispatch('openCart', true);
@@ -46,7 +47,7 @@
           <a
             data-sveltekit-prefetch
             href={tab.path}
-            class={`hover:opacity-100 px-2 py-1 text-white rounded-lg ${
+            class={`rounded-lg px-2 py-1 text-white hover:opacity-100 ${
               currentRoute === tab.path ? 'opacity-100' : 'opacity-75'
             }`}>{tab.name}</a
           >
@@ -58,11 +59,11 @@
     <SearchBar />
   </div>
   <div class="ml-auto flex items-center">
-    <button on:click={openCart} class="relative my-2 mx-4">
+    <button on:click={openCart} class="relative mx-4 my-2">
       <Icons strokeColor="#fff" type="cart" />
       <div
         data-test="cart-quantity"
-        class="absolute bottom-0 left-0 -ml-3 -mb-3 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white text-xs text-black"
+        class="absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white text-xs text-black"
       >
         {$cartQuantity}
       </div>
@@ -78,6 +79,7 @@
     </button>
   </div>
   {#if showMenu}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
       on:click|self={() => {
         showMenu = false;
@@ -97,7 +99,7 @@
           <button on:click={openCart} class="relative mr-4">
             <Icons strokeColor="#fff" type="cart" />
             <div
-              class="absolute bottom-0 left-0 -ml-3 -mb-3 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white text-xs text-black"
+              class="absolute bottom-0 left-0 -mb-3 -ml-3 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white text-xs text-black"
             >
               {$cartQuantity}
             </div>
@@ -114,7 +116,7 @@
               <a
                 data-sveltekit-prefetch
                 href={tab.path}
-                class={`hover:opacity-100 px-2 py-1 text-white font-bold text-xl rounded-lg ${
+                class={`rounded-lg px-2 py-1 text-xl font-bold text-white hover:opacity-100 ${
                   currentRoute === tab.path ? 'opacity-100' : 'opacity-75'
                 }`}>{tab.name}</a
               >

@@ -1,4 +1,4 @@
-import { getAllProducts } from '$utils/shopify';
+import { getAllProducts } from '$lib/utils/shopify';
 import { error } from '@sveltejs/kit';
 
 export async function load() {
@@ -9,12 +9,12 @@ export async function load() {
 
     if (allProducts) {
       return {
-        body: { allProducts }
+        body: { allProducts },
       };
     }
 
-    throw error(404)
-  }  else {
-    throw error(res.status)
+    throw error(404);
+  } else {
+    throw error(res.status);
   }
 }

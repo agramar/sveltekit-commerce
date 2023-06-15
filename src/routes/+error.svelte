@@ -1,8 +1,8 @@
-<script>
-  import Icons from '$components/Icons.svelte';
+<script lang="ts">
+  import Icons from '$lib/components/Icons.svelte';
 </script>
 
-<div class="flex h-screen flex-col items-center justify-center ">
+<div class="flex h-screen flex-col items-center justify-center">
   <div class="flex w-auto flex-col items-center justify-center p-6 md:p-0">
     <div class="mb-8 flex w-full items-center">
       <div class="flex flex-none items-center justify-center rounded-full bg-white p-4">

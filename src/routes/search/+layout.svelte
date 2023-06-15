@@ -3,6 +3,7 @@
     <h1 class="text-lg font-semibold">Categories</h1>
     <ul>
       <li class="mt-2 text-sm text-gray-300">
+        <!-- svelte-ignore a11y-role-supports-aria-props -->
         <a
           data-sveltekit-prefetch
           data-testid="category-link"
@@ -12,6 +13,7 @@
         >
       </li>
       <li class="mt-2 text-sm text-gray-300">
+        <!-- svelte-ignore a11y-role-supports-aria-props -->
         <a
           data-sveltekit-prefetch
           data-testid="category-link"
@@ -21,6 +23,7 @@
         >
       </li>
       <li class="mt-2 text-sm text-gray-300">
+        <!-- svelte-ignore a11y-role-supports-aria-props -->
         <a
           data-sveltekit-prefetch
           data-testid="category-link"

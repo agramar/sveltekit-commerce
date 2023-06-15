@@ -1,4 +1,4 @@
-import { getProduct, getAllProducts } from '$utils/shopify';
+import { getProduct, getAllProducts } from '$lib/utils/shopify';
 import { error } from '@sveltejs/kit';
 
 export async function load({ params }) {
@@ -12,14 +12,14 @@ export async function load({ params }) {
       return {
         body: {
           product,
-          featuredProducts
-        }
+          featuredProducts,
+        },
       };
     }
 
-    throw error(404)
+    throw error(404);
   } else {
-    let status = resOne.status !== 200 ? resOne.status : resTwo.status
-    throw error(status)
+    const status = resOne.status !== 200 ? resOne.status : resTwo.status;
+    throw error(status);
   }
 }

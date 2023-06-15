@@ -1,4 +1,4 @@
-import { getAllCollections } from '$utils/shopify';
+import { getAllCollections } from '$lib/utils/shopify';
 import { error } from '@sveltejs/kit';
 
 export async function load() {
@@ -8,12 +8,12 @@ export async function load() {
     const collections = res.body?.data?.collections?.edges || [];
     if (collections) {
       return {
-        body: { collections }
+        body: { collections },
       };
     }
 
-    throw error(404)
+    throw error(404);
   } else {
-    throw error(res.status)
+    throw error(res.status);
   }
 }

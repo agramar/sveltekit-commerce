@@ -1,9 +1,9 @@
-<script>
-  import Icons from '$components/Icons.svelte';
+<script lang="ts">
+  import Icons from '$lib/components/Icons.svelte';
   import { fade } from 'svelte/transition';
 
-  export let title;
-  export let description;
+  export let title: string;
+  export let description: string;
 
   let toggle = false;
 </script>
@@ -12,9 +12,9 @@
   on:click={() => {
     toggle = !toggle;
   }}
-  class="flex w-full border-b border-white/50 py-4 text-sm "
+  class="flex w-full border-b border-white/50 py-4 text-sm"
 >
-  <div class={`opacity-50 h-6 w-6 rotate ${toggle ? 'down' : ''}`}>
+  <div class={`rotate h-6 w-6 opacity-50 ${toggle ? 'down' : ''}`}>
     <Icons type="caretRight" strokeColor="#fff" />
   </div>
   <div class="ml-4">

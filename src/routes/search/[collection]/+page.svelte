@@ -1,12 +1,12 @@
-<script>
-  import GridTile from '$components/GridTile.svelte';
+<script lang="ts">
   import { page } from '$app/stores';
+  import GridTile from '$lib/components/GridTile.svelte';
 
   /** @type {import('./$types').PageData} */
-  export let data;
-  let collection;
+  export let data: any;
+  let collection: any;
 
-  $: data.body.collections.forEach((d) => {
+  $: data.body.collections.forEach((d: any) => {
     if (d.node.handle === $page?.params?.collection) {
       collection = d.node;
     }

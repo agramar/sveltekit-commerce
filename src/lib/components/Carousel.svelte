@@ -1,5 +1,5 @@
-<script>
-  export let items = [];
+<script lang="ts">
+  export let items: any[] = [];
 </script>
 
 <div class="slider relative w-full overflow-scroll bg-light">
@@ -17,7 +17,9 @@
           loading="lazy"
           src={item.node.images.edges[0].node.originalSrc}
         />
-        <div class="absolute top-0 left-0 z-40 mt-32 ml-44 bg-black p-4">{item.node.title}</div>
+        <div class="absolute left-0 top-0 z-40 ml-44 mt-32 bg-black p-4">
+          {item.node.title}
+        </div>
       </a>
     {/each}
   </div>

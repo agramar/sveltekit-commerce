@@ -1,13 +1,12 @@
+import { loadCart } from '$lib/utils/shopify';
 import { writable } from 'svelte/store';
-import { shopifyFetch } from './utils/shopify.js';
-import { loadCart } from '$utils/shopify';
 
 export const cartQuantity = writable('');
 export const cart = writable([]);
 export const search = writable('');
 
 export const getCartItems = async () => {
-  let cartId = JSON.parse(localStorage.getItem('cartId'));
+  const cartId = JSON.parse(localStorage.getItem('cartId') || '');
 
   try {
     const shopifyResponse = await loadCart(cartId);

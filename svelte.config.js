@@ -6,15 +6,14 @@ const config = {
   kit: {
     adapter: adapter(),
     alias: {
-      $components: 'src/components',
-      $utils: 'src/utils'
-    }
+      $lib: 'src/lib'
+    },
   },
   preprocess: [
     preprocess({
-      postcss: true
-    })
-  ]
+      postcss: true,
+    }),
+  ],
 };
 
 export default config;

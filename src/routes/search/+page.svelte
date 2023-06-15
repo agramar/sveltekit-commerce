@@ -1,14 +1,14 @@
-<script>
-  import GridTile from '$components/GridTile.svelte';
+<script lang="ts">
+  import GridTile from '$lib/components/GridTile.svelte';
   import { page } from '$app/stores';
 
   /** @type {import('./$types').PageData} */
-  export let data;
-  $: search = $page.url.searchParams.get('q');
+  export let data: any;
 
+  $: search = $page.url.searchParams.get('q');
   $: displayedProducts = search
-    ? data.body.allProducts.edges.filter((item) => {
-        return item.node.title.toLowerCase().includes(search.toLowerCase());
+    ? data.body.allProducts.edges.filter((item: any) => {
+        return item.node.title.toLowerCase().includes(search ? search.toLowerCase() : '');
       })
     : data.body.allProducts.edges;
 </script>

@@ -1,51 +1,58 @@
-<script>
-  import Icons from './Icons.svelte';
+<script lang="ts">
+  import Icons from '$lib/components/Icons.svelte';
   import { createEventDispatcher } from 'svelte';
+
   const dispatch = createEventDispatcher();
+
   export let loading = false;
-  export let items = [];
-  function addOneItem(item, i) {
+  export let items: any[] = [];
+
+  function addOneItem(item: any, i: number) {
     loading = true;
     dispatch('addProduct', {
-      body: item.node.merchandise.id
+      body: item.node.merchandise.id,
     });
   }
-  function removeOneItem(item, i) {
+
+  function removeOneItem(item: any, i: number) {
     loading = true;
     let quantity = item.node.quantity - 1;
     dispatch('removeProduct', {
       body: {
         variantId: item.node.merchandise.id,
         quantity: quantity,
-        lineId: item.node.id
-      }
+        lineId: item.node.id,
+      },
     });
   }
-  function removeEntireItem(item, i) {
+
+  function removeEntireItem(item: any, i: number) {
     loading = true;
     dispatch('removeProduct', {
       body: {
         variantId: item.node.merchandise.id,
         quantity: 0,
-        lineId: item.node.id
-      }
+        lineId: item.node.id,
+      },
     });
   }
+
   async function checkout() {
     loading = true;
-    let checkoutUrl = localStorage.getItem('cartUrl');
+    let checkoutUrl = localStorage.getItem('cartUrl') || '';
     window.open(JSON.parse(checkoutUrl), '_blank');
     loading = false;
   }
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
   on:click|self
   class="absolute inset-0 z-50 flex max-h-screen w-full justify-end overflow-hidden bg-black/50"
 >
-  <div class="z-50 w-full bg-black p-6 md:w-1/2 lg:w-1/3 relative">
+  <div class="relative z-50 w-full bg-black p-6 md:w-1/2 lg:w-1/3">
     {#if loading}
-      <div class="absolute inset-0 bg-black/50 z-50" />
+      <div class="absolute inset-0 z-50 bg-black/50" />
     {/if}
     <div class="mb-6 flex w-full items-center justify-between">
       <div class="text-2xl font-medium">My Cart</div>
@@ -89,7 +96,7 @@
             <Icons type="close" strokeColor="#fff" />
           </button>
           <div class="flex h-8 w-full border border-white/40">
-            <div class="flex h-full items-center px-2 ">
+            <div class="flex h-full items-center px-2">
               {item.node.quantity}
             </div>
             <button

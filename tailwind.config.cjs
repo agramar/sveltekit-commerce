@@ -7,9 +7,9 @@ module.exports = {
         svelteDark: '#F03A00',
         hotPink: '#FF1966',
         dark: '#111111',
-        light: '#FAFAFA'
-      }
-    }
+        light: '#FAFAFA',
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };

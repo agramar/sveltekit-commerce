@@ -1,6 +1,16 @@
-<script>
+<script lang="ts">
   export let strokeColor = '#000';
-  export let type;
+  export let type:
+    | 'star'
+    | 'cart'
+    | 'close'
+    | 'minus'
+    | 'plus'
+    | 'menu'
+    | 'search'
+    | 'arrowLeft'
+    | 'arrowRight'
+    | 'caretRight';
   export let width = '24px;';
   export let height = '24px;';
 </script>

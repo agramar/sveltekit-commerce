@@ -1,7 +1,7 @@
-<script>
-  import GridTile from '$components/GridTile.svelte';
+<script lang="ts">
+  import GridTile from '$lib/components/GridTile.svelte';
 
-  export let products;
+  export let products: any[];
 </script>
 
 <div class="flex flex-col lg:h-full lg:flex-row">

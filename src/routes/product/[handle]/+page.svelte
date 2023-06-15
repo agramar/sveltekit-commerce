@@ -1,23 +1,23 @@
-<script>
-  import GridTile from '$components/GridTile.svelte';
-  import DescriptionToggle from '$components/DescriptionToggle.svelte';
-  import Icons from '$components/Icons.svelte';
-  import { getCartItems } from '../../../store.js';
+<script lang="ts">
+  import GridTile from '$lib/components/GridTile.svelte';
+  import DescriptionToggle from '$lib/components/DescriptionToggle.svelte';
+  import Icons from '$lib/components/Icons.svelte';
+  import { getCartItems } from '../../../store';
 
   /** @type {import('./$types').PageData} */
-  export let data;
+  export let data: any;
 
-  let selectedOptions = {};
+  let selectedOptions: any = {};
   let cartLoading = false;
   let currentImageIndex = 0;
 
   $: highlightedImageSrc = data?.body?.product?.images?.edges[currentImageIndex]?.node?.originalSrc;
 
-  data?.body?.product?.options.forEach((option) => {
+  data?.body?.product?.options.forEach((option: any) => {
     selectedOptions = { ...selectedOptions, [option.name]: option.values[0] };
   });
 
-  function changeHighlightedImage(direction) {
+  function changeHighlightedImage(direction: string) {
     if (direction === 'next') {
       if (currentImageIndex + 1 < data?.body?.product?.images?.edges.length) {
         currentImageIndex = currentImageIndex + 1;
@@ -39,11 +39,11 @@
     let cartId;
 
     if (typeof window !== 'undefined') {
-      cartId = JSON.parse(localStorage.getItem('cartId'));
+      cartId = JSON.parse(localStorage.getItem('cartId') || '');
     }
 
-    data.body.product.variants.edges.forEach((variant) => {
-      let result = variant.node.selectedOptions.every((option) => {
+    data.body.product.variants.edges.forEach((variant: any) => {
+      let result = variant.node.selectedOptions.every((option: any) => {
         return selectedOptions[option.name] === option.value;
       });
       if (result) {
@@ -53,7 +53,7 @@
 
     await fetch('/cart.json', {
       method: 'PATCH',
-      body: JSON.stringify({ cartId: cartId, variantId: variantId })
+      body: JSON.stringify({ cartId: cartId, variantId: variantId }),
     });
     // Wait for the API to finish before updating cart items
     await getCartItems();
@@ -79,26 +79,27 @@
               imageSrc={highlightedImageSrc}
             />
             {#if data.body.product?.images?.edges.length > 1}
-              <div class="absolute right-0 bottom-0 z-40 p-6 ">
+              <div class="absolute bottom-0 right-0 z-40 p-6">
                 <button
                   on:click={() => {
                     changeHighlightedImage('back');
                   }}
-                  class="border border-b border-t border-l border-black py-4 px-8"
+                  class="border border-b border-l border-t border-black px-8 py-4"
                   ><Icons type="arrowLeft" /></button
                 >
                 <button
                   on:click={() => {
                     changeHighlightedImage('next');
                   }}
-                  class="-ml-1 border border-black py-4 px-8"><Icons type="arrowRight" /></button
+                  class="-ml-1 border border-black px-8 py-4"><Icons type="arrowRight" /></button
                 >
               </div>
             {/if}
           </div>
         {/key}
-        <div class="flex h-1/5 ">
+        <div class="flex h-1/5">
           {#each data.body.product.images.edges as variant, i}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
               on:click={() => {
                 currentImageIndex = i;
@@ -120,9 +121,11 @@
                   on:click={() => {
                     selectedOptions = { ...selectedOptions, [option.name]: value };
                   }}
-                  class={`${value.length <= 3 ? 'w-12' : 'px-2'} ${
-                    selectedOptions[option.name] === value ? 'opacity-100' : 'opacity-60'
-                  } transition duration-300 ease-in-out hover:scale-110 hover:opacity-100 border-white h-12 mr-3 flex items-center justify-center rounded-full border`}
+                  class={`
+                    ${value.length <= 3 ? 'w-12' : 'px-2'} 
+                    ${selectedOptions[option.name] === value ? 'opacity-100' : 'opacity-60'} 
+                    mr-3 flex h-12 items-center justify-center rounded-full border border-white transition duration-300 ease-in-out hover:scale-110 hover:opacity-100
+                  `}
                 >
                   {value}
                 </button>

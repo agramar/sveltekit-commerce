@@ -1,11 +1,11 @@
-<script>
-  import { page } from '$app/stores';
+<script lang="ts">
   import { goto } from '$app/navigation';
-  import Icons from './Icons.svelte';
+  import { page } from '$app/stores';
+  import Icons from '$lib/components/Icons.svelte';
 
   let value = $page.url.searchParams.get('q');
 
-  async function submit(e) {
+  async function submit() {
     let query = new URLSearchParams();
     if (value) {
       query.set('q', value);
@@ -15,7 +15,7 @@
 </script>
 
 <form on:submit|preventDefault={submit} class="relative flex w-full items-center">
-  <div class="absolute top-0 right-0 mr-2">
+  <div class="absolute right-0 top-0 mr-2">
     <Icons strokeColor="#fff" type="search" />
   </div>
   <input

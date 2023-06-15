@@ -1,30 +1,27 @@
-export async function shopifyFetch({ query, variables }) {
-  const endpoint =
-    import.meta.env.VITE_SHOPIFY_API_ENDPOINT ||
-    'https://next-js-store.myshopify.com/api/2021-10/graphql.json';
-  const key =
-    import.meta.env.VITE_SHOPIFY_STOREFRONT_API_TOKEN || 'ef7d41c7bf7e1c214074d0d3047bcd7b';
+export async function shopifyFetch(params: ShopifyFetchParams) {
 
+  const endpoint = import.meta.env.VITE_SHOPIFY_API_ENDPOINT;
+  const key = import.meta.env.VITE_SHOPIFY_STOREFRONT_API_TOKEN;
 
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': key
+        'X-Shopify-Storefront-Access-Token': key,
       },
-      body: { query, variables } && JSON.stringify({ query, variables })
+      body: params && JSON.stringify(params),
     });
-    
+
     return {
       status: result.status,
-      body: await result.json()
+      body: await result.json(),
     };
   } catch (error) {
     console.error('Error:', error);
     return {
       status: 500,
-      error: 'Error receiving data'
+      error: 'Error receiving data',
     };
   }
 }
@@ -100,7 +97,7 @@ export async function getAllProducts() {
             }
         }
       }
-    }`
+    }`,
   });
 }
 
@@ -114,7 +111,6 @@ export async function getAllCollections() {
                     products(
                         first: 100,
                         sortKey: TITLE
-
                     ) {
                         edges{
                             node {
@@ -186,11 +182,11 @@ export async function getAllCollections() {
                 }
             }
         }
-    }`
+    }`,
   });
 }
 
-export async function loadCart(cartId) {
+export async function loadCart(cartId: string) {
   return shopifyFetch({
     query: `
         query GetCart($cartId: ID!) {
@@ -241,11 +237,11 @@ export async function loadCart(cartId) {
             }
         }
       `,
-    variables: { cartId }
+    variables: { cartId },
   });
 }
 
-export async function getProduct(handle) {
+export async function getProduct(handle: string) {
   return shopifyFetch({
     query: ` 
         query getProduct($handle: String!) {
@@ -316,8 +312,8 @@ export async function getProduct(handle) {
         }
     `,
     variables: {
-      handle
-    }
+      handle,
+    },
   });
 }
 
@@ -333,11 +329,11 @@ export async function createCart() {
         }
       }
     `,
-    variables: {}
+    variables: {},
   });
 }
 
-export async function updateCart({ cartId, lineId, variantId, quantity }) {
+export async function updateCart({ cartId, lineId, variantId, quantity }: any) {
   return shopifyFetch({
     query: `
       mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
@@ -350,20 +346,19 @@ export async function updateCart({ cartId, lineId, variantId, quantity }) {
       }
     `,
     variables: {
-      cartId: cartId,
+      cartId,
       lines: [
         {
           id: lineId,
           merchandiseId: variantId,
-          quantity: quantity
-        }
-      ]
-    }
+          quantity: quantity,
+        },
+      ],
+    },
   });
 }
 
-export async function addToCart({ cartId, variantId }) {
-
+export async function addToCart({ cartId, variantId }: any) {
   return shopifyFetch({
     query: `
       mutation addToCart($cartId: ID!, $lines: [CartLineInput!]!) {
@@ -388,15 +383,14 @@ export async function addToCart({ cartId, variantId }) {
         }
       }
     `,
-
     variables: {
       cartId: cartId,
       lines: [
         {
           merchandiseId: variantId,
-          quantity: 1
-        }
-      ]
-    }
+          quantity: 1,
+        },
+      ],
+    },
   });
 }
